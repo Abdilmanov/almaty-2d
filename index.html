@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Алматы 2D</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://js.arcgis.com/4.10/esri/css/main.css">
+<link rel="stylesheet" href="https://js.arcgis.com/4.10/esri/themes/light/main.css">
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+<script src="https://js.arcgis.com/4.10/"></script>
+<script src="js/script.js"></script>
+</head>
+<body>
+  <div id="viewDiv">
+    <div id="topLeft">
+      <div id="search"></div>
+      <div style="margin-bottom:5px" id="crime_button" title="Преступления"></div>
+      <div id="crime_period_panel">
+        <div class="panel">
+          <div class="periods-header">Выберите период преступлений</div>
+          <div class="periods-body">
+            <div id="week" class="periods">week</div>
+            <div id="month" class="periods">month</div>
+            <div id="half_year" class="periods">half</div>
+            <div id="year" class="periods">year</div>
+            <div id="my_period" class="periods">my period</div>
+            <div id="my_period_panel">
+              <label style="margin-bottom: 0px!important; color:white;">&#8195;Начало даты&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;Конец даты</label>
+              <input id="my_period_calendar_start" type="date"></input>
+              	&nbsp;&nbsp;&nbsp;&mdash;&nbsp;&nbsp;&nbsp;
+              <input id="my_period_calendar_end" type="date"></input>
+            </div>
+          </div>
+        </div>
+        <button id="query_button1" class="button1">Запросить</button>
+      </div>
+      <div id="crime_hard_panel">
+        <div class="panel">
+          <div class="periods-header">Выберите тяжесть преступлений</div>
+          <div class="periods-body">
+            <div id="hard_1" class="periods">небольшой тяжести</div>
+            <div id="hard_2" class="periods">средней тяжести</div>
+            <div id="hard_3" class="periods">тяжкие</div>
+            <div id="hard_4" class="periods">особо тяжкие</div>
+            <div id="hard_5" class="periods">преступления</div>
+            <div id="hard_6" class="periods">проступки</div>
+            <div id="hard_all" class="periods">Все</div>
+          </div>
+        </div>
+        <button id="query_button2" class="button1">Запросить</button>
+      </div>
+      <div id="query_data_panel">
+        <div id="query_data_panel_header">
+          <button id="change_crime_button" class="button2" title="Изменить период преступлений">Изменить период</button>
+          <button id="change_hard_button" class="button3" title="Изменить тяжесть преступлений">Изменить тяжесть</button>
+        </div>
+        <div id="query_data_panel_body"></div>
+      </div>
+    </div>
+    <div id="topRight" style="margin-top:37px">
+      <!-- <div id="fullscreen_button" style="margin-bottom:5px"></div> -->
+      <div style="margin-bottom:5px">
+        <button class="action-button esri-icon-minus" id="distanceButton" type="button"
+         title="Измерьте расстояние между двумя или более точками"></button>
+      </div>
+      <div style="margin-bottom:5px">
+        <button class="action-button esri-icon-polygon" id="areaButton" type="button"
+         title="Измерьте площадь"></button>
+      </div>
+      <!-- <div>
+        <button class="action-button esri-icon-locate" id="track" type="button"
+        title="Мое местоположение"></button>
+      </div> -->
+      <div style="margin-bottom:5px" id="basemap_button" title="Базовые карты"></div>
+      <div id="basemap_panel" class="card">
+        <div id="basemap_panelheader" class="card-header">
+          Базовые карты
+        </div>
+        <div id="basemap_body" class="card-body">
+          <div id="basemap_content">
+            <ul class="esri-basemap-gallery__item-container" role="menu">
+              <li id="almaty2d" class="esri-basemap-gallery__item" role="menuitem" tabindex="0" title="Алматы 2D">
+                <img id="photo" alt class="esri-basemap-gallery__item-thumbnail" src="images/maps/almaty2d.png">
+                <div class="esri-basemap-gallery__item-title">Алматы 2D</div>
+              </li>
+              <li id="satellite" class="esri-basemap-gallery__item" role="menuitem" tabindex="0" title="Изображение">
+                <img id="photo" alt class="esri-basemap-gallery__item-thumbnail" src="images/maps/world-imagery.png">
+                <div class="esri-basemap-gallery__item-title">Изображение</div>
+              </li>
+              <li id="hybrid" class="esri-basemap-gallery__item" role="menuitem" tabindex="0" title="Снимки с надписями">
+                <img id="photo" alt class="esri-basemap-gallery__item-thumbnail" src="images/maps/hybrid.png">
+                <div class="esri-basemap-gallery__item-title">Снимки с надписями</div>
+              </li>
+              <li id="streets" class="esri-basemap-gallery__item" role="menuitem" tabindex="0" title="Улицы">
+                <img id="photo" alt class="esri-basemap-gallery__item-thumbnail" src="images/maps/world-street.png">
+                <div class="esri-basemap-gallery__item-title">Улицы</div>
+              </li>
+              <li id="topo" class="esri-basemap-gallery__item" role="menuitem" tabindex="0" title="Топографический">
+                <img id="photo" alt class="esri-basemap-gallery__item-thumbnail" src="images/maps/topo.png">
+                <div class="esri-basemap-gallery__item-title">Топографический</div>
+              </li>
+              <li id="dark-gray" class="esri-basemap-gallery__item" role="menuitem" tabindex="0" title="Темно-серое полотно">
+                <img id="photo" alt class="esri-basemap-gallery__item-thumbnail" src="images/maps/dark-gray.png">
+                <div class="esri-basemap-gallery__item-title">Темно-серое полотно</div>
+              </li>
+              <li id="gray" class="esri-basemap-gallery__item" role="menuitem" tabindex="0" title="Светло-серое полотно">
+                <img id="photo" alt class="esri-basemap-gallery__item-thumbnail" src="images/maps/gray.png">
+                <div class="esri-basemap-gallery__item-title">Светло-серое полотно</div>
+              </li>
+              <li id="national-geographic" class="esri-basemap-gallery__item" role="menuitem" tabindex="0" title="National Geographic">
+                <img id="photo" alt class="esri-basemap-gallery__item-thumbnail" src="images/maps/national-geographic.png">
+                <div class="esri-basemap-gallery__item-title">National Geographic</div>
+              </li>
+              <li id="terrain" class="esri-basemap-gallery__item" role="menuitem" tabindex="0" title="Terrain с надписями">
+                <img id="photo" alt class="esri-basemap-gallery__item-thumbnail" src="images/maps/terrain.png">
+                <div class="esri-basemap-gallery__item-title">Terrain с надписями</div>
+              </li>
+              <li id="oceans" class="esri-basemap-gallery__item" role="menuitem" tabindex="0" title="Океаны">
+                <img id="photo" alt class="esri-basemap-gallery__item-thumbnail" src="images/maps/oceans.png">
+                <div class="esri-basemap-gallery__item-title">Океаны</div>
+              </li>
+              <li id="osm" class="esri-basemap-gallery__item" role="menuitem" tabindex="0" title="OpenStreetMap">
+                <img id="photo" alt class="esri-basemap-gallery__item-thumbnail" src="images/maps/osm.png">
+                <div class="esri-basemap-gallery__item-title">OpenStreetMap</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:5px" id="direction_button" title="Маршрут"></div>
+      <div id="direction_panel" class="card">
+        <div id="direction_panelheader" class="card-header">
+          Постройте маршрут
+        </div>
+        <div id="direction_body" class="card-body">
+          <div id="direction_content"></div>
+        </div>
+      </div>
+      <div style="margin-bottom:5px" id="layer_button" title="Слои"></div>
+      <div id="layer_content"></div>
+      <!-- <div id="layer_panel" class="card">
+        <div id="layer_panelheader" class="card-header">
+          Выбрать слои
+        </div>
+        <div id="layer_body" class="card-body">
+          <div id="layer_content"></div>
+        </div>
+      </div> -->
+      <button style="margin-bottom:5px" class="action-button" id="locate_button" type="button"></button>
+      <!-- <div id="home_button"></div> -->
+    </div>
+    <div id="onClickLoader">
+      <div class="spinner">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
+      </div>
+    </div>
+    <div id="main_loading">
+      <div class="cssload-thecube">
+        <div class="cssload-cube cssload-c1"></div>
+      	<div class="cssload-cube cssload-c2"></div>
+      	<div class="cssload-cube cssload-c4"></div>
+      	<div class="cssload-cube cssload-c3"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,957 @@
+html, body, #viewDiv {
+  left:0px!important;
+  top:0px!important;
+  padding: 0;
+  margin: 0;
+  height: 100%!important;
+  width: 100%!important;
+  background-color: white!important;
+}
+
+#topRight {
+  background: transparent;
+  padding: 0px;
+  box-shadow: none !important;
+}
+#topLeft{
+  background: transparent;
+  padding: 0px;
+  box-shadow: none !important;
+}
+
+.action-button {
+  font-size: 16px;
+  background-color: #ffffff;
+  border: 1px solid #D3D3D3;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #000000;
+  height: 32px;
+  width: 32px;
+  text-align: center;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+}
+.action-button:hover,
+.action-button:focus{
+  border: 0px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+.active {
+  background: #f0f0f0;
+}
+
+#search {
+  /* display: block; */
+  position: absolute;
+  width: 300px;
+  top: 0px;
+  left: 40px;
+  display: inline-block;
+  z-index: 1;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+}
+
+#crime_button{
+  top: 140px;
+  font-size: 16px;
+  background: url("/arcgis2d_map/images/icons/crime.png") no-repeat center center;
+  background-color: #ffffff;
+  border: 1px solid #D3D3D3;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #6e6e6e;
+  height: 32px;
+  width: 32px;
+  text-align: center;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+}
+#crime_button:hover,
+#crime_button:active{
+  background-color: #f0f0f0;
+  /* color: #6c757d; */
+}
+#crime_period_panel{
+  font-size: 14px!important;
+  position: absolute;
+  left: 40px;
+  top: 43px;
+  width: 300px!important;
+  /* max-height: 95%; */
+  /* resize: vertical; */
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: none;
+  /* min-height: 200px; */
+  z-index: 1;
+  height: auto;
+  /* background: transparent!important;  */
+  /* background-color: rgba(0, 0, 0, 0.50)!important; */
+  -ms-overflow-style: none;  /* IE 10+*/
+  overflow: -moz-scrollbars-none;  /* Firefox*/
+}
+#crime_period_panel::-webkit-scrollbar {
+  display: none!important;  /* Safari and Chrome*/
+}
+#crime_hard_panel{
+  font-size: 14px!important;
+  position: absolute;
+  left: 40px;
+  top: 43px;
+  width: 300px!important;
+  /* max-height: 95%; */
+  /* resize: vertical; */
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: none;
+  /* min-height: 200px; */
+  z-index: 1;
+  height: auto;
+  /* background: transparent!important;  */
+  /* background-color: rgba(0, 0, 0, 0.50)!important; */
+  -ms-overflow-style: none;  /* IE 10+*/
+  overflow: -moz-scrollbars-none;  /* Firefox*/
+}
+#crime_hard_panel::-webkit-scrollbar {
+  display: none!important;  /* Safari and Chrome*/
+}
+.periods-header{
+  font-size: 18px;
+  text-align: center;
+  padding: 5px 0px 5px 0px;
+  border-radius: 10px 10px 0px 0px;
+  color: white;
+  background-color: rgba(102, 51, 153, 0.99)!important;
+}
+.periods-body{
+  font-size: 18px;
+  color: white;
+  background: transparent!important;
+  background-color: rgba(102, 51, 153, 0.75)!important;
+}
+.periods{
+  font-size: 18px;
+  text-align: center;
+  padding: 5px 0px 5px 0px;
+  border-bottom: 1px solid #00000020;
+  cursor: pointer;
+  color: white!important;
+  /* background-color: rgba(0, 0, 0, 0.50)!important; */
+  /* transition: all 300ms linear 0ms; */
+}
+.periods:hover{
+  transform: rotate(0deg) scale(1.1,1.1) ;
+  transition: transform 300ms linear 0ms, box-shadow 300ms linear 0ms, z-index 300ms linear 0ms;
+}
+.periods-active{
+  transform: rotate(0deg) scale(1.1,1.1) ;
+  transition: transform 300ms linear 0ms, box-shadow 300ms linear 0ms, z-index 300ms linear 0ms;
+  background-color: rgba(102, 51, 153, 0.9)!important;
+}
+#my_period_panel{
+  display: none;
+  font-size: 14px;
+  margin-top: 2px;
+  padding-bottom: 10px;
+}
+#my_period_calendar_start{
+  width: 125px;
+  position: relative;
+}
+#my_period_calendar_end{
+  width: 126px;
+  position: relative;
+}
+#queryCount{
+  color: white;
+}
+#query_data_panel{
+  display: none;
+  /* font-size: 14px!important; */
+  position: absolute;
+  left: 40px;
+  top: 40px;
+  width: 301px!important;
+  /* max-height: 95%; */
+  /* resize: vertical; */
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* min-height: 200px; */
+  z-index: 1;
+  height: 300px;
+  /* background: transparent!important; */
+  /* background-color: rgba(0, 0, 0, 0.50)!important; */
+  -ms-overflow-style: none;  /* IE 10+*/
+  overflow: -moz-scrollbars-none;  /* Firefox*/
+}
+#query_data_panel::-webkit-scrollbar {
+  display: none!important;  /* Safari and Chrome*/
+}
+#query_data_panel_header{
+  height: 33px;
+}
+#query_button{
+  border-radius: 0px 0px 10px 10px;
+}
+.button1 {
+  display: inline-block;
+  width: 100%;
+  padding: 0.3em 1em;
+  text-decoration: none;
+  color: rebeccapurple;
+  border: solid 2px rebeccapurple;
+  border-radius: 0 0 10px 10px;
+  transition: .4s;
+  background: white;
+}
+.button1:hover {
+  background: rebeccapurple;
+  color: white;
+  cursor: pointer;
+}
+.button2 {
+  display: inline-block;
+  width: 50%;
+  padding: 0.3em 1em;
+  position: relative;
+  text-decoration: none;
+  color: rebeccapurple;
+  border-top: solid 2px rebeccapurple;
+  border-left: solid 2px rebeccapurple;
+  border-bottom: solid 2px rebeccapurple;
+  border-right: solid 1px rebeccapurple;
+  border-radius: 10px 0 0 10px;
+  transition: .4s;
+  background: white;
+}
+.button2:hover {
+  background: rebeccapurple;
+  color: white;
+  cursor: pointer;
+}
+.button3 {
+  display: inline-block;
+  width: 50%;
+  padding: 0.3em 1em;
+  position: absolute;
+  text-decoration: none;
+  color: rebeccapurple;
+  border-top: solid 2px rebeccapurple;
+  border-left: solid 1px rebeccapurple;
+  border-bottom: solid 2px rebeccapurple;
+  border-right: solid 2px rebeccapurple;
+  border-radius: 0 10px 10px 0;
+  transition: .4s;
+  background: white;
+}
+.button3:hover {
+  background: rebeccapurple;
+  color: white;
+  cursor: pointer;
+}
+
+#query_data_panel_body{
+  width: 100%;
+}
+#table_data {
+  font-family: "Times New Roman", "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+}
+
+#table_data td, #table_data th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  color: black;
+  background-color: white;
+}
+#table_data tr:hover {
+  background-color: #ddd;
+}
+#table_data th {
+  font-size: 16px;
+  background-color: rebeccapurple;
+  color: white;
+}
+
+#basemap_button{
+  top: 100px;
+  font-size: 16px;
+  background: url("/arcgis2d_map/images/icons/basemap.png") no-repeat center center;
+  background-color: #ffffff;
+  border: 1px solid #D3D3D3;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #6e6e6e;
+  height: 32px;
+  width: 32px;
+  text-align: center;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+}
+#basemap_button:hover,
+#basemap_button:active{
+  background-color: #f0f0f0;
+  /* color: #6c757d; */
+}
+#basemap_panel{
+  font-size: 14px!important;
+  position: absolute;
+  right: 40px;
+  top: 0px;
+  z-index: 1;
+  width: 300px!important;
+  height: 345px;
+  /* resize: vertical; */
+  overflow-y: auto;
+  display: none;
+  background-color: transparent!important;
+  -ms-overflow-style: none;  /* IE 10+*/
+  overflow: -moz-scrollbars-none;  /* Firefox*/
+  }
+#basemap_panel::-webkit-scrollbar {
+  display: none!important;  /* Safari and Chrome*/
+}
+#basemap_panelheader{
+  cursor: move;
+  color: white!important;
+  background-color: rgba(0, 0, 0, 0.75)!important;
+}
+#basemap_body{
+  margin-bottom: 0px;
+  overflow-y: auto;
+  background-color: rgba(0, 0, 0, 0.50)!important;
+  -ms-overflow-style: none;  /* IE 10+*/
+  overflow: -moz-scrollbars-none;  /* Firefox*/
+}
+#basemap_body::-webkit-scrollbar {
+  display: none!important;  /* Safari and Chrome*/
+}
+.esri-basemap-gallery {
+    color: #ffffff!important;
+    background-color: transparent!important;
+    min-width: 225px;
+    overflow-y: auto;
+    position: relative;
+    width: auto;
+    max-width: 300px;
+}
+.esriBasemapGalleryLabelContainer{
+  height: auto;
+}
+.esriBasemapGalleryNode{
+  min-height: 115px;
+}
+.card-header {
+  padding: .75rem 1.25rem;
+  margin-bottom: 0;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.35);
+  border-bottom: 1px solid rgba(0,0,0,.125);
+}
+.esri-basemap-gallery__item{
+  border-left-width: 0px!important;
+  border-right-width: 0px!important;
+}
+.esri-basemap-gallery__item-title {
+  font-size: 12px;
+  word-break: break-word;
+  color: #ffffff!important;
+  padding: 0 7px;
+}
+.esri-basemap-gallery__item:hover
+.esri-basemap-gallery__item-title,
+.esri-basemap-gallery__item:focus
+.esri-basemap-gallery__item-title {
+  color: #ffffff!important;
+}
+.esri-basemap-gallery__item:hover,
+.esri-basemap-gallery__item:focus,
+.esri-basemap-gallery__item:visited {
+  background-color: rgba(0, 0, 0, 0.50)!important;
+  border-left-color: none!important;
+}
+
+.esri-layer-list__item-actions {
+    position: relative;
+    background-color: none!important;
+    background: transparent!important;
+    color: #6e6e6e;
+    margin: -1px 7px 6px;
+    height: auto;
+}
+.esri-layer-list__item-action {
+    justify-content: flex-start;
+    flex-flow: row;
+    border-radius: 2px;
+}
+.esri-layer-list__item-actions[aria-expanded="true"] {
+    animation: esri-fade-in 250ms ease-in-out;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+.esri-layer-list__item-action:hover,
+.esri-layer-list__action-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.75)!important;
+}
+.esri-layer-list__item-actions-list {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 6px 0;
+    color: white;
+    border-radius: 10px;
+    background: transparent;
+    background-color: rgba(0, 0, 0, 0.5);
+    list-style: none;
+    /* border-top: 2px solid #fff; */
+}
+.esri-layer-list__item-actions-menu-item {
+  display: flex;
+  flex: 1 0 21px;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff!important;
+  cursor: pointer;
+  padding: 0 3px;
+  transition: border-color 250ms ease-in-out;
+}
+.esri-layer-list__item-actions-menu-item:hover {
+  background-color: rgba(0, 0, 0, 0.50)!important;
+  border-radius: 5px!important;
+}
+.esri-layer-list__item-actions-menu-item--active{
+  background-color: rgba(0, 0, 0, 0.50)!important;
+  border-radius: 5px!important;
+}
+.esri-layer-list__item-actions-menu-item--active:hover {
+  background-color: rgba(0, 0, 0, 0.50)!important;
+  border-radius: 5px!important;
+}
+:focus{
+  outline: none!important
+}
+.esri-legend {
+    background: transparent!important;
+    background-color: rgba(0, 0, 0, 0.50)!important;
+    color: white!important;
+    border-radius: 10px!important;
+}
+#photo{
+  height: 64px;
+  width: 95px;
+}
+.esri-basemap-gallery__item:first-child {
+  margin-top: 0px!important;
+}
+
+#layer_button{
+  top: 140px;
+  font-size: 16px;
+  background: url("/arcgis2d_map/images/icons/layer.png") no-repeat center center;
+  background-color: #ffffff;
+  border: 1px solid #D3D3D3;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #6e6e6e;
+  height: 32px;
+  width: 32px;
+  text-align: center;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+}
+#layer_button:hover,
+#layer_button:active{
+  background-color: #f0f0f0;
+  /* color: #6c757d; */
+}
+#layer_panel{
+  font-size: 14px!important;
+  position: absolute;
+  right: 40px;
+  top: 0px;
+  z-index: 1;
+  width: 300px!important;
+  /* max-height: 95%; */
+  resize: vertical;
+  display: none;
+  /* min-height: 200px; */
+  height: 300px;
+}
+#layer_body{
+  margin-bottom: 0px;
+  background-color: white;
+}
+#layer_panelheader{
+  cursor: move;
+}
+#layer_content{
+  display: none;
+  position: absolute;
+  border-radius: 15px;
+  top: 0px;
+  right: 40px;
+  width: 300px;
+  margin-bottom: 0px;
+  max-height: 410px;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.50)!important;
+  -ms-overflow-style: none;  /* IE 10+*/
+  overflow: -moz-scrollbars-none;  /* Firefox*/
+}
+#layer_content::-webkit-scrollbar {
+  display: none!important;  /* Safari and Chrome*/
+}
+
+.esri-layer-list {
+    color: #ffffff!important;
+    background-color: #f5f5f5;
+    padding: 6px 7px;
+    overflow-y: auto;
+}
+.esri-layer-list__item {
+    background-color: rgba(0, 0, 0, 0.50)!important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    position: relative;
+    list-style: none;
+    /* margin: 3px 0; */
+    padding: 0;
+    border-radius: 15px;
+    max-height: 200px;
+    overflow-y: auto!important;
+    -ms-overflow-style: none;  /* IE 10+*/
+    overflow: -moz-scrollbars-none;  /* Firefox*/
+}
+.esri-layer-list__item::-webkit-scrollbar {
+  display: none!important;  /* Safari and Chrome*/
+}
+.esri-layer-list__item-toggle {
+    padding: 0 3px;
+    cursor: pointer;
+    color: #ffffff!important;
+}
+.esri-layer-list__child-toggle {
+    color: #ffffff!important;
+    width: 15px;
+    cursor: pointer;
+}
+.esri-layer-list__item--invisible-at-scale
+.esri-layer-list__item-title {
+    color: rgba(255, 255, 255, 0.25)!important;
+}
+.esri-layer-list__item--has-children>.esri-layer-list__list {
+    font-size: 12px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.esri-layer-list-panel__content--legend
+.esri-legend__service {
+    padding: 10px 0 0 0!important;
+}
+
+#direction_button{
+  top: 140px;
+  font-size: 16px;
+  background: url("/arcgis2d_map/images/icons/direction.png") no-repeat center center;
+  background-color: #ffffff;
+  border: 1px solid #D3D3D3;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #6e6e6e;
+  height: 32px;
+  width: 32px;
+  text-align: center;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+}
+#direction_button:hover,
+#direction_button:active{
+  background-color: #f0f0f0;
+  /* color: #6c757d; */
+}
+#direction_panel{
+  font-size: 14px!important;
+  position: absolute;
+  right: 40px;
+  top: 0px;
+  z-index: 1;
+  width: 300px!important;
+  /* max-height: 95%; */
+  resize: vertical;
+  overflow: hidden;
+  display: none;
+  /* min-height: 200px; */
+  height: 300px;
+}
+#direction_body{
+  margin-bottom: 0px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-color: white;
+}
+#direction_panelheader{
+  cursor: move;
+}
+
+#track{
+  top: 140px;
+  font-size: 16px;
+  background:  no-repeat center center;
+  background-color: #ffffff;
+  border: 1px solid #D3D3D3;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #6e6e6e;
+  height: 32px;
+  width: 32px;
+  text-align: center;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+}
+
+#home_button{
+  display: inline-block;
+  height: 30px;
+  width: 30px;
+  /* background: url("/images/fulls.png") no-repeat center center; */
+  /* background-color: rgba(255,255,255,0.80); */
+  text-align: center;
+  padding: 2px;
+  user-select: none;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+  top: 40px;
+  right: 50px;
+  z-index: 1;
+  box-shadow: 0 1px 0.5px rgba(0,0,0,0.3), 0 2px 2px rgba(0,0,0,0.2);
+}
+#home_button:hover{
+  background-color: rgba(245,245,245,0.90);
+}
+
+#fullscreen_button{
+  display: inline-block;
+  height: 30px;
+  width: 30px;
+  /* background: url("/images/fulls.png") no-repeat center center; */
+  background-color: rgba(255,255,255,0.80);
+  text-align: center;
+  padding: 2px;
+  user-select: none;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+  top: 15px;
+  right: 50px;
+  z-index: 1;
+  box-shadow: 0 1px 0.5px rgba(0,0,0,0.3), 0 2px 2px rgba(0,0,0,0.2);
+}
+#fullscreen_button:hover{
+  background-color: rgba(245,245,245,0.90);
+}
+.esri-fullscreen{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  font-size: 16px;
+  background:  no-repeat center center;
+  background-color: #ffffff!important;
+  border: 1px solid #D3D3D3;
+  border-radius: 50%;
+  cursor: pointer!important;
+  color: #000000!important;
+  height: 32px!important;
+  width: 32px!important;
+  text-align: center!important;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3)!important;
+}
+.esri-fullscreen:hover,
+.esri-fullscreen:active{
+  background-color: #f0f0f0!important;
+  /* color: #6c757d; */
+}
+
+.esri-widget--button {
+  color: #000000!important;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3)!important;
+}
+
+.esri-home{
+  position: absolute;
+  top: 258px;
+  right: 0px;
+  font-size: 16px;
+  background:  no-repeat center center;
+  background-color: #ffffff!important;
+  border: 1px solid #D3D3D3;
+  border-radius: 50%;
+  cursor: pointer!important;
+  color: #000000!important;
+  height: 32px!important;
+  width: 32px!important;
+  text-align: center!important;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3)!important;
+}
+.esri-home:hover,
+.esri-home:active{
+  background-color: #f0f0f0!important;
+  /* color: #6c757d; */
+}
+
+.esri-ui-corner
+.esri-component.esri-widget--panel{
+  position: absolute;
+  right: 45px;
+  top: 0px;
+}
+
+.esri-hidden{
+  display: block!important;
+}
+
+.esri-popup__main-container {
+  width: 370px!important;
+}
+
+.panel{
+  border-radius: 0.25rem;
+}
+
+/* Анимация загрузки */
+#main_loading{
+  position: absolute;
+  left:0px;
+  top:0px;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #FFFFFF;
+  opacity: 1;
+  display: inline-block;
+}
+.cssload-thecube {
+	width: 73px;
+	height: 73px;
+	margin: 0 auto;
+	top: 50%;
+	position: relative;
+	transform: rotateZ(45deg);
+		-o-transform: rotateZ(45deg);
+		-ms-transform: rotateZ(45deg);
+		-webkit-transform: rotateZ(45deg);
+		-moz-transform: rotateZ(45deg);
+}
+.cssload-thecube .cssload-cube {
+	position: relative;
+	transform: rotateZ(45deg);
+		-o-transform: rotateZ(45deg);
+		-ms-transform: rotateZ(45deg);
+		-webkit-transform: rotateZ(45deg);
+		-moz-transform: rotateZ(45deg);
+}
+.cssload-thecube .cssload-cube {
+	float: left;
+	width: 50%;
+	height: 50%;
+	position: relative;
+	transform: scale(1.1);
+		-o-transform: scale(1.1);
+		-ms-transform: scale(1.1);
+		-webkit-transform: scale(1.1);
+		-moz-transform: scale(1.1);
+}
+.cssload-thecube .cssload-cube:before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgb(43,160,199);
+	animation: cssload-fold-thecube 2.76s infinite linear both;
+		-o-animation: cssload-fold-thecube 2.76s infinite linear both;
+		-ms-animation: cssload-fold-thecube 2.76s infinite linear both;
+		-webkit-animation: cssload-fold-thecube 2.76s infinite linear both;
+		-moz-animation: cssload-fold-thecube 2.76s infinite linear both;
+	transform-origin: 100% 100%;
+		-o-transform-origin: 100% 100%;
+		-ms-transform-origin: 100% 100%;
+		-webkit-transform-origin: 100% 100%;
+		-moz-transform-origin: 100% 100%;
+}
+.cssload-thecube .cssload-c2 {
+	transform: scale(1.1) rotateZ(90deg);
+		-o-transform: scale(1.1) rotateZ(90deg);
+		-ms-transform: scale(1.1) rotateZ(90deg);
+		-webkit-transform: scale(1.1) rotateZ(90deg);
+		-moz-transform: scale(1.1) rotateZ(90deg);
+}
+.cssload-thecube .cssload-c3 {
+	transform: scale(1.1) rotateZ(180deg);
+		-o-transform: scale(1.1) rotateZ(180deg);
+		-ms-transform: scale(1.1) rotateZ(180deg);
+		-webkit-transform: scale(1.1) rotateZ(180deg);
+		-moz-transform: scale(1.1) rotateZ(180deg);
+}
+.cssload-thecube .cssload-c4 {
+	transform: scale(1.1) rotateZ(270deg);
+		-o-transform: scale(1.1) rotateZ(270deg);
+		-ms-transform: scale(1.1) rotateZ(270deg);
+		-webkit-transform: scale(1.1) rotateZ(270deg);
+		-moz-transform: scale(1.1) rotateZ(270deg);
+}
+.cssload-thecube .cssload-c2:before {
+	animation-delay: 0.35s;
+		-o-animation-delay: 0.35s;
+		-ms-animation-delay: 0.35s;
+		-webkit-animation-delay: 0.35s;
+		-moz-animation-delay: 0.35s;
+}
+.cssload-thecube .cssload-c3:before {
+	animation-delay: 0.69s;
+		-o-animation-delay: 0.69s;
+		-ms-animation-delay: 0.69s;
+		-webkit-animation-delay: 0.69s;
+		-moz-animation-delay: 0.69s;
+}
+.cssload-thecube .cssload-c4:before {
+	animation-delay: 1.04s;
+		-o-animation-delay: 1.04s;
+		-ms-animation-delay: 1.04s;
+		-webkit-animation-delay: 1.04s;
+		-moz-animation-delay: 1.04s;
+}
+@keyframes cssload-fold-thecube {
+	0%, 10% {
+		transform: perspective(136px) rotateX(-180deg);
+		opacity: 0;
+	}
+	25%,
+				75% {
+		transform: perspective(136px) rotateX(0deg);
+		opacity: 1;
+	}
+	90%,
+				100% {
+		transform: perspective(136px) rotateY(180deg);
+		opacity: 0;
+	}
+}
+@-o-keyframes cssload-fold-thecube {
+	0%, 10% {
+		-o-transform: perspective(136px) rotateX(-180deg);
+		opacity: 0;
+	}
+	25%,
+				75% {
+		-o-transform: perspective(136px) rotateX(0deg);
+		opacity: 1;
+	}
+	90%,
+				100% {
+		-o-transform: perspective(136px) rotateY(180deg);
+		opacity: 0;
+	}
+}
+@-ms-keyframes cssload-fold-thecube {
+	0%, 10% {
+		-ms-transform: perspective(136px) rotateX(-180deg);
+		opacity: 0;
+	}
+	25%,
+				75% {
+		-ms-transform: perspective(136px) rotateX(0deg);
+		opacity: 1;
+	}
+	90%,
+				100% {
+		-ms-transform: perspective(136px) rotateY(180deg);
+		opacity: 0;
+	}
+}
+@-webkit-keyframes cssload-fold-thecube {
+	0%, 10% {
+		-webkit-transform: perspective(136px) rotateX(-180deg);
+		opacity: 0;
+	}
+	25%,
+				75% {
+		-webkit-transform: perspective(136px) rotateX(0deg);
+		opacity: 1;
+	}
+	90%,
+				100% {
+		-webkit-transform: perspective(136px) rotateY(180deg);
+		opacity: 0;
+	}
+}
+@-moz-keyframes cssload-fold-thecube {
+	0%, 10% {
+		-moz-transform: perspective(136px) rotateX(-180deg);
+		opacity: 0;
+	}
+	25%,
+				75% {
+		-moz-transform: perspective(136px) rotateX(0deg);
+		opacity: 1;
+	}
+	90%,
+				100% {
+		-moz-transform: perspective(136px) rotateY(180deg);
+		opacity: 0;
+	}
+}
+
+/* Page loader on click */
+#onClickLoader{
+  position: absolute;
+  left:0px;
+  top:0px;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 100;
+  display: none;
+  cursor: wait;
+  background-color: rgba(0, 0, 0, 0.60);
+}
+.spinner {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  /* margin: 100px auto; */
+  top: 50%;
+  left: 50%;
+}
+
+.double-bounce1, .double-bounce2 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #333;
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+  animation: sk-bounce 2.0s infinite ease-in-out;
+}
+
+.double-bounce2 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+@-webkit-keyframes sk-bounce {
+  0%, 100% { -webkit-transform: scale(0.0) }
+  50% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bounce {
+  0%, 100% {
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 50% {
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
+}

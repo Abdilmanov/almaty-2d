@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta http-equiv="Content-Security-Policy-Report-Only" content="upgrade-insecure-requests">
+  <title>Crime Kazakhstan</title>
+  <link rel="stylesheet" href="./4.10/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.10/"></script>
+  <script src="jss/my.js"></script>
+ <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    #optionsDiv {
+      color: white;
+      padding: 10px;
+      width: 300px;
+      background: rgba(0, 0, 0, 0.5);
+      border: white;
+    }
+      
+     #buttonsDiv {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 12px;
+      background-color: rgba(0, 0, 0, 0.5);
+      border: 1px solid black;
+    }
+    .esri-popup .esri-popup-header .esri-title {
+      font-size: 18px;
+      font-weight: bolder;
+    }
+
+    .esri-popup .esri-popup-body .esri-popup-content {
+      font-size: 14px;
+    }
+  </style>
+  <script>
+    require([
+        "esri/Map",
+        "esri/views/SceneView",
+        "esri/layers/GraphicsLayer",
+        "esri/Graphic",
+        "esri/tasks/QueryTask",
+        "esri/tasks/support/Query",
+        "esri/tasks/GeometryService",
+        "esri/geometry/projection",
+        "esri/geometry/SpatialReference",
+        "esri/symbols/ObjectSymbol3DLayer",
+        "esri/geometry/Extent",
+        "esri/widgets/Home",
+        "esri/widgets/Expand"
+      ],
+      function(
+        Map, SceneView, GraphicsLayer, Graphic,
+        QueryTask, Query,GeometryService,projection,
+        SpatialReference,ObjectSymbol3DLayer, Extent, Home, Expand
+      ) {
+        var peaksUrl =
+        "http://infopublic.pravstat.kz:8399/arcgis/rest/services/stat/MapServer/5";
+
+        var map = new Map({
+          basemap: "hybrid" //dark-gray //hybrid
+        });
+        var view = new SceneView({
+          container: "viewDiv",
+          map: map,
+          viewingMode: "global",
+          // clippingArea: mapExtent,
+          // extent: mapExtent,
+          logo: false,
+          popup: {
+          dockEnabled: true,
+          dockOptions: {
+            position: "top-right",
+            breakpoint: false
+          }
+          
+        },
+          camera: { 
+            position: { 
+              x: 71.407018,
+              y: 51.063253,
+              z: 800
+            },
+            
+            tilt: 80
+          }
+
+        });
+        console.log(view.extent);
+        var homeWidget = new Home({
+            view: view
+            });
+           view.ui.add(homeWidget, "top-left");
+        var resultsLayer = new GraphicsLayer();
+        resultsLayer.visible=true;
+        
+        map.add(resultsLayer);
+        var qTask = new QueryTask({
+        url: peaksUrl
+      });
+        var params = new Query({
+        outFields: ["HARD_CODE,CRIME_CODE,DAT_SOVER_STR,STAT,ORGAN,UD,FZ1R18P5,FZ1R18P6"],
+        spatialRelationship: "intersects",
+        outSpatialReference:new SpatialReference(102100),
+        returnGeometry: true
+        
+      });
+        
+    view.when(function() {
+        
+        document.getElementById("doBtn").addEventListener("click",
+          doQuery);
+        document.getElementById("ClearBtn").addEventListener("click",
+          ClaerAll);
+        
+      });
+    var CrimeExpand = new Expand({
+        expandIconClass: "esri-icon-search",
+        view: view,
+        content: "<div class='dashboard' id='optionsDiv'>"+
+      "<h2>Криминогенная обстановка</h2>"+
+          "<form name='my_form' class='dashboard' >"+
+            "<p>Выберите период:<br />" +
+            "<input value='7' type='radio' name='periodcheck' checked/>" +
+            "<label id='lweek'> За 7 дней</label> <br>"+
+            "<input value='30' type='radio' name='periodcheck' />" +
+            "<label id='lmonth'> За 30 дней</label> <br>"+
+            "<input value='90' type='radio' name='periodcheck'/>" +
+            "<label id='lday'> За 90 дней</label> <br>"+
+            "<input value='180' type='radio' name='periodcheck' />" +
+            "<label id='lday'> За 180 дней</label> <br>"+
+            "<input value='05' type='radio' name='periodcheck' />" +
+            "<label id='lmonth'> Выборочная дата</label> <br>"+
+            "</p>"+
+          "</form>"+
+         "<br>"+
+      "<button class='esri-widget' id='doBtn'>Показать...</button>"+
+      "<button class='esri-widget' id='ClearBtn'>Очистить...</button>"+
+      "<br>"+
+      "<p><span id='printResults'></span></p>"+
+    "</div>"
+
+          });
+      view.ui.add(CrimeExpand, "bottom-right");
+      var attributeName = document.getElementById("attSelect");
+      var expressionSign = document.getElementById("signSelect");
+      var value = document.getElementById("valSelect");
+       function ClaerAll() 
+      {
+          resultsLayer.removeAll();
+      }
+      function doQuery() 
+      {
+
+        var selected = document.forms.my_form.periodcheck.value;
+        var EndDate = new Date();
+        var StartDate = SetStartDate(new Date(), selected);
+        var SQLtxt="DAT_SOVER>= TIMESTAMP '"+MyDate(StartDate)+"'"+
+            " AND DAT_SOVER<= TIMESTAMP '"+MyDate(EndDate)+"'";
+         resultsLayer.removeAll();
+         document.getElementById("printResults").innerHTML ="";
+        params.where = SQLtxt;
+        qTask.execute(params)
+          .then(getResults)
+          .catch(promiseRejected);
+          
+        function promiseRejected(error) 
+          {
+          console.log("Ошибка: ", error.message);
+          }  
+        function getResults(response) 
+          {
+           params.geometry= view.extent;
+           //view.extent.update();
+           console.log(view.extent);
+           var peakResults = response.features.map(function(
+          point) {
+                  
+                markerSymbol = {
+                  type: "point-3d", 
+                    symbolLayers: [{
+                      type: "icon", 
+                      size: 10,
+                      
+                      material: { color: "#ff0000" },
+                      outline: {
+                        color: "#330000",
+                        size: "0.5px"
+                      }
+                    }],
+                    verticalOffset: {
+                        screenLength: 30,
+                        maxWorldLength: 100,
+                        minWorldLength: 20
+                        },
+                        callout: {
+                          type: "line",  
+                          size: 1.5,
+                          color: [150, 150, 150],
+                          border: {
+                            color: [50, 50, 50]
+                          }
+                        }
+                };
+             // console.log(gethardcode(point.attributes.HARD_CODE));  
+            
+            point.symbol=markerSymbol;
+            //point.geometry.z=point.attributes.HARD_CODE*50;
+            point.attributes.HARD_CODE=changeContent(point.attributes.HARD_CODE);
+            point.attributes.CRIME_CODE=descstat(point.attributes.CRIME_CODE);
+            point.popupTemplate = popupTemplate;
+            // console.log(point);
+            return point;
+            });
+          resultsLayer.addMany(peakResults);
+           /*view.goTo(peakResults).then(function() {
+          view.popup.open({
+            features: peakResults,
+            featureMenuOpen: true,
+            updateLocationEnabled: true
+          });
+        });*/
+           document.getElementById("printResults").innerHTML = " Найдено результатов: "+ peakResults.length;
+           console.log(view.extent);
+            };
+        };
+
+      var rotateAntiClockwiseSpan = document.getElementById(
+        "rotateAntiClockwiseSpan");
+      var rotateClockwiseSpan = document.getElementById(
+        "rotateClockwiseSpan");
+      var indicatorSpan = document.getElementById("indicatorSpan");
+      rotateClockwiseSpan.addEventListener("click", function() {
+        rotateView(-1);
+      });
+      rotateAntiClockwiseSpan.addEventListener("click", function() {
+        rotateView(1);
+      });
+      indicatorSpan.addEventListener("click", tiltView);
+
+      // Watch the change on view.camera
+      view.watch("camera", updateIndicator);
+
+      // Create the event's callback functions
+      function rotateView(direction) {
+        var heading = view.camera.heading;
+
+        if (direction > 0) {
+          heading = Math.floor((heading + 1e-3) / 90) * 90 + 90;
+        } else {
+          heading = Math.ceil((heading - 1e-3) / 90) * 90 - 90;
+        }
+
+        view.goTo({
+          heading: heading
+        });
+      }
+
+      function tiltView() {
+        var tilt = view.camera.tilt + 1e-3;
+        if (tilt >= 80) {
+          tilt = 0;
+        } else if (tilt >= 40) {
+          tilt = 80;
+        } else {
+          tilt = 40;
+        }
+
+        view.goTo({
+          tilt: tilt
+        });
+      }
+
+      function updateIndicator(camera) {
+        var tilt = camera.tilt;
+        var heading = camera.heading;
+        var transform = "rotateX(" + 0.8 * tilt +
+          "deg) rotateY(0) rotateZ(" + -heading +
+          "deg)";
+
+        indicatorSpan.style["transform"] = transform;
+        indicatorSpan.style["-webkit-transform"] = transform; // Solution for Safari
+      }  
+      });
+
+        
+  </script>
+</head>
+
+<body>
+   <div id="viewDiv"></div>
+   
+   
+  <div id="buttonsDiv">
+    <button id="rotateAntiClockwiseSpan" title="Повернуть на 90°">↻</button>
+    <button id="indicatorSpan"></button>
+    <button id="rotateClockwiseSpan" title="Повернуть на 90°">↺</button>
+  </div>
+</body>
+
+</html>
